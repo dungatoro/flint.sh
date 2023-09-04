@@ -12,13 +12,13 @@ try_create() {
     echo "# $title" | tr _ " " >> "$title$n.$type".md
 }
 
-TYPES=("bullets" "detailed")
+types=("bullets" "detailed")
 
 case $1 in
     jot)
         title=$(gum input --placeholder "stuff about rocks" | tr " " _)
         echo "note type for $title:"
-        type=$(gum choose ${TYPES[@]})
+        type=$(gum choose ${types[@]})
         try_create
         $EDITOR "$title$n.$type".md
         ;;
@@ -26,7 +26,7 @@ case $1 in
         titles=$(gum write --placeholder "more stuff about rocks" | tr " " _)
         for title in $titles; do
             echo "note type for $title:"
-            type=$(gum choose ${TYPES[@]})
+            type=$(gum choose ${types[@]})
             try_create
         done
         ;;
