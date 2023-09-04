@@ -26,7 +26,7 @@ case $1 in
         then
             git add .
             git commit -q -m "keeping things synced for free!"
-            git push 
+            git push -q
             echo "Git repo is now up-to-date!"
         else
             git init -q
