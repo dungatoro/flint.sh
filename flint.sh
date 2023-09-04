@@ -1,44 +1,37 @@
 #!/bin/bash
 
-tryCreate() {
-    N=""
-    if [ -f "$TITLE.$TYPE".md ]
-    then
-        N=1
-        while [ -f "$TITLE$N.$TYPE".md ]
-        do
-            N+=1
+try_create() {
+    n=""
+    if [ -f "$title.$type".md ]; then
+        n=1
+        while [ -f "$title$n.$type".md ]; do
+            ((n=n+1))
         done
     fi
-    touch "$TITLE$N.$TYPE".md
-    echo "# $TITLE" | tr _ " " >> "$TITLE$N.$TYPE".md
+    touch "$title$n.$type".md
+    echo "# $title" | tr _ " " >> "$title$n.$type".md
 }
 
 TYPES=("bullets" "detailed")
 
 case $1 in
     jot)
-        TITLE=$(gum input --placeholder "stuff about rocks" | tr " " _)
-        echo "note type for $TITLE:"
-        TYPE=$(gum choose ${TYPES[@]})
-        tryCreate
-        $EDITOR "$TITLE$N.$TYPE".md
+        title=$(gum input --placeholder "stuff about rocks" | tr " " _)
+        echo "note type for $title:"
+        type=$(gum choose ${TYPES[@]})
+        try_create
+        $EDITOR "$title$n.$type".md
         ;;
     new)
-        TITLES=$(gum write --placeholder "more stuff about rocks" | tr " " _)
-        for TITLE in $TITLES
-        do
-            echo "note type for $TITLE:"
-            TYPE=$(gum choose ${TYPES[@]})
-            tryCreate
+        titles=$(gum write --placeholder "more stuff about rocks" | tr " " _)
+        for title in $titles; do
+            echo "note type for $title:"
+            type=$(gum choose ${TYPES[@]})
+            try_create
         done
         ;;
-    all)
-
-        ;;
     git)
-        if [ $(git rev-parse --is-inside-work-tree) ]
-        then
+        if [ $(git rev-parse --is-inside-work-tree) ]; then
             git add .
             git commit -q -m "keeping things synced for free!"
             git push -q
