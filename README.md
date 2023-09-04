@@ -8,8 +8,8 @@ Flint is a free and open-source command line tool for managing markdown notes. N
 ## Installation
 Clone the repo and run the install script:
 ```bash
-git clone https://github.com/dungatoro/flint.sh \
-cd flint.sh \
+git clone https://github.com/dungatoro/flint.sh
+cd flint.sh
 ./install.sh
 ```
 After that you can delete the `flint.sh` repo folder with no worries. `flint` will be in you `$PATH` and call be called with just `flint`.
