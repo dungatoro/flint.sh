@@ -25,7 +25,7 @@ case $1 in
         if [ $(git rev-parse --is-inside-work-tree) ]
         then
             git add .
-            git commit -m "keeping things synced for free!"
+            git commit -q -m "keeping things synced for free!"
             git push -u origin master
             echo "Git repo is now up-to-date!"
         else
