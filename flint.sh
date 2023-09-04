@@ -1,24 +1,36 @@
 #!/bin/bash
 
-createNote() {
-    echo "note type for $TITLE:"
-    TYPE=$(gum choose "bullets" "detailed")
-    touch "$TITLE.$TYPE".md
+tryCreate() {
+    N=""
+    if [ -f "$TITLE.$TYPE".md ]
+    then
+        N=1
+        while [ -f "$TITLE$N.$TYPE".md ]
+        do
+            N+=1
+        done
+    fi
+    touch "$TITLE$N.$TYPE".md
+    echo "# $TITLE" | tr _ " " >> "$TITLE$N.$TYPE".md
 }
+
+TYPES=("bullets" "detailed")
 
 case $1 in
     jot)
         TITLE=$(gum input --placeholder "stuff about rocks" | tr " " _)
-        createNote
-        echo "# $TITLE" | tr _ " " >> "$TITLE.$TYPE".md
-        $EDITOR "$TITLE.$TYPE".md
+        echo "note type for $TITLE:"
+        TYPE=$(gum choose ${TYPES[@]})
+        tryCreate
+        $EDITOR "$TITLE$N.$TYPE".md
         ;;
     new)
         TITLES=$(gum write --placeholder "more stuff about rocks" | tr " " _)
         for TITLE in $TITLES
         do
-            createNote
-            echo "# $TITLE" | tr _ " " >> "$TITLE.$TYPE".md
+            echo "note type for $TITLE:"
+            TYPE=$(gum choose ${TYPES[@]})
+            tryCreate
         done
         ;;
     all)
