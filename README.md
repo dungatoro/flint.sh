@@ -1,4 +1,5 @@
-# flint.sh
+
+# [icon](icon.png) flint.sh
 Flint is a free and open-source command line tool for managing markdown notes. Notes are grouped into folders where each note has a title and group `title.group.md`.
 
 ## Features
