@@ -6,5 +6,5 @@ Flint is a free and open-source command line tool for managing markdown notes. N
 - syncing notes using git
 
 ## todo!()
-- [] listing based on groups
-- [] graph view cos obsidian
+- [ ] listing based on groups
+- [ ] graph view cos obsidian

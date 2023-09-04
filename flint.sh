@@ -21,6 +21,9 @@ case $1 in
             echo "# $TITLE" | tr _ " " >> "$TITLE.$TYPE".md
         done
         ;;
+    all)
+
+        ;;
     git)
         if [ $(git rev-parse --is-inside-work-tree) ]
         then
