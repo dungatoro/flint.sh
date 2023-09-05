@@ -12,7 +12,7 @@ try_create() {
     echo "# $title" | tr _ " " >> "$title$n.$type".md
 }
 
-types=("bullets" "detailed")
+types=("bullet-points" "documents" "todos" )
 
 case $1 in
     jot)
@@ -31,17 +31,20 @@ case $1 in
         done
         ;;
     git)
-        if [ $(git rev-parse --is-inside-work-tree) ]; then
+        if [ $(git rev-parse --is-inside-work-tree) ] && [ "$(git branch --show-current)" == "quarry" ]; then
             git add .
             git commit -q -m "keeping things synced for free!"
-            git push -q -u origin master
+            git push -q -u origin quarry
             echo "Git repo is now up-to-date!"
+        elif [ "$2" == "setup" ]; then
+            git branch -m master quarry
         else
             git init -q
             echo "To setup syncing:"
             echo " 1. Create a repo on github.com."
             echo " 2. Grab the ssh key [git@github.com:username/reponame.git]."
             echo " 3. run [git remote add origin git@github.com:username/reponame.git]."
+            echo " 4. run [flint git setup]."
         fi
         ;;
     *) 
