@@ -15,14 +15,14 @@ try_create() {
 types=("bullet-points" "documents" "todos" )
 
 case $1 in
-    jot)
+    note)
         title=$(gum input --placeholder "stuff about rocks" | tr " " _)
         echo "note type for $title:"
         type=$(gum choose ${types[@]})
         try_create
         $EDITOR "$title$n.$type".md
         ;;
-    new)
+    bulk)
         titles=$(gum write --placeholder "more stuff about rocks" | tr " " _)
         for title in $titles; do
             echo "note type for $title:"
@@ -30,7 +30,7 @@ case $1 in
             try_create
         done
         ;;
-    git)
+    sync)
         if [ $(git rev-parse --is-inside-work-tree) ] && [ "$(git branch --show-current)" == "quarry" ]; then
             git add .
             git commit -q -m "keeping things synced for free!"
@@ -49,9 +49,9 @@ case $1 in
         ;;
     *) 
         echo "Need help?"
-        echo " jot = create new note and edit"
-        echo " new = create a bunch of notes"
-        echo " git = keep your notes synced with a git repo"
+        echo " note = create new note and edit"
+        echo " bulk = create a bunch of notes"
+        echo " sync = keep your notes synced with a git repo"
         ;;
 esac
 
